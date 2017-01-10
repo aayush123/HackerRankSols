@@ -3,15 +3,15 @@
 test_cases = int(input())
 for each_test_case in range(test_cases):
     #ASSUME ALL LISTS 1 INDEXED NOT 0!!
-    
+
     #initialize number of nodes and edges
     nodes, edges = [int(x) for x in input().split()]
-    
+
     #initialize empty adjacency dictionary
     adj_dict = {}
     for each_node in range(1,nodes+1):
         adj_dict[each_node] = []
-    
+
     #update adjacency dictionary with input values
     for each_edge in range(edges):
         v1,v2 = [int(x) for x in input().split()]
@@ -19,10 +19,10 @@ for each_test_case in range(test_cases):
             adj_dict[v1].append(v2)
         if(v1 not in adj_dict[v2]):
             adj_dict[v2].append(v1)
-    
+
     #get start node
     start_node = int(input())
-    
+
     #initialize result vector
     res_list = []
     for each_node in range(nodes):
@@ -39,23 +39,23 @@ for each_test_case in range(test_cases):
     #start BFS
     q.append([start_node,0])
     while(q != []):
-        current_node, current_lvl = q.pop(0)
-        trav_list.append(current_node)
-        adj_nodes = adj_dict[current_node]
+        current_node, current_lvl = q.pop(0)    #get current node
+        trav_list.append(current_node)          #append current node to Traversed list
+        adj_nodes = adj_dict[current_node]      #get adjacent nodes
         for each_adj_node in adj_nodes:
             to_be_trav = False
-            for each_pair in q:
+            for each_pair in q:                 #check if the adjacent node is to be traversed in future
                 if(each_pair[0] == each_adj_node):
                     to_be_trav = True
                     break
-            if(each_adj_node not in trav_list and to_be_trav is False):
+            if(each_adj_node not in trav_list and to_be_trav is False):     #put adj node in queue if has not been traversed and is not to be traversed
                 q.append([each_adj_node,current_lvl+1])
-        res_list[current_node-1] = current_lvl
+        res_list[current_node-1] = current_lvl  #update result list
         #print(res_list)
         #print(q)
-    
+
     answer_string = ""
-    
+
     for each_dist in res_list:
         if(each_dist == -1):
             answer_string += str(each_dist)+' '
@@ -63,5 +63,5 @@ for each_test_case in range(test_cases):
             continue
         if(each_dist > 0):
             answer_string += str(each_dist*6)+' '
-    
+
     print(answer_string)
